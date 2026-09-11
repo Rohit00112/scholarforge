@@ -1,2 +1,2 @@
-export const GET = () => new Response("OK");
-export const POST = () => new Response("OK");
+import { handlers } from "@/lib/auth";
+export const { GET, POST } = handlers;

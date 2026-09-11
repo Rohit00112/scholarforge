@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { Hammer } from "lucide-react";
 import { Button } from "../ui/Button";
+import { auth, signOut } from "@/lib/auth";
 
-// We will make auth dynamic later. For Phase 1.0 it's a structural shell.
-export function Navbar() {
-  const isSignedIn = false; // Mock for now
+export async function Navbar() {
+  const session = await auth();
+  const user = session?.user;
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-[#1F2937] bg-[#0B0F19]/80 backdrop-blur-md">
@@ -19,7 +20,7 @@ export function Navbar() {
             <Link href="/projects" className="hover:text-[#E5E7EB]">
               Explore
             </Link>
-            {isSignedIn && (
+            {user && (
               <Link href="/dashboard" className="hover:text-[#E5E7EB]">
                 Dashboard
               </Link>
@@ -28,10 +29,27 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
-          {isSignedIn ? (
-            <Link href="/projects/new">
-              <Button size="sm">Publish Project</Button>
-            </Link>
+          {user ? (
+            <>
+              <Link href="/projects/new">
+                <Button size="sm">Publish</Button>
+              </Link>
+              <div className="ml-2 flex items-center gap-3 border-l border-[#1F2937] pl-5">
+                <Link href={`/students/${user.username}`} className="text-sm font-medium text-[#9CA3AF] hover:text-[#E5E7EB]">
+                  {user.name}
+                </Link>
+                <form
+                  action={async () => {
+                    "use server";
+                    await signOut({ redirectTo: "/" });
+                  }}
+                >
+                  <button type="submit" className="text-sm font-medium text-[#9CA3AF] hover:text-red-400">
+                    Sign out
+                  </button>
+                </form>
+              </div>
+            </>
           ) : (
             <>
               <Link href="/login" className="text-sm font-medium text-[#9CA3AF] hover:text-[#E5E7EB]">
