@@ -117,6 +117,8 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
     if (draftRef.current) {
       data.status = "draft";
       draftRef.current = false;
+    } else if (isEditing) {
+      data.status = "published";
     }
 
     setIsPending(true);

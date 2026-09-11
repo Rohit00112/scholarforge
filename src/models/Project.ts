@@ -99,7 +99,6 @@ const ProjectSchema = new Schema<IProject>(
   { timestamps: true }
 );
 
-ProjectSchema.index({ slug: 1 }, { unique: true });
 ProjectSchema.index({ status: 1, publishedAt: -1 });
 ProjectSchema.index({ category: 1, status: 1 });
 ProjectSchema.index({ ownerId: 1 });

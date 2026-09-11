@@ -70,8 +70,6 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-UserSchema.index({ username: 1 });
-UserSchema.index({ email: 1 });
 UserSchema.index({ role: 1, branch: 1 });
 UserSchema.index({ name: "text", username: "text", bio: "text", skills: "text" });
 
