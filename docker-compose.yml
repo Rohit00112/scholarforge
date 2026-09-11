@@ -1,0 +1,68 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/scholarforge
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-dev-secret-change-in-production}
+      - NEXTAUTH_URL=http://localhost:3000
+      - ALLOWED_EMAIL_DOMAINS=${ALLOWED_EMAIL_DOMAINS:-college.edu}
+      - COLLEGE_NAME=${COLLEGE_NAME:-ScholarForge}
+      - MINIO_ENDPOINT=http://minio:9000
+      - MINIO_PUBLIC_URL=http://localhost:9000
+      - MINIO_REGION=us-east-1
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER:-scholarforge}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-scholarforge-minio}
+      - MINIO_BUCKET=scholarforge
+    depends_on:
+      mongo:
+        condition: service_started
+      minio-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER:-scholarforge}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-scholarforge-minio}
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 $${MINIO_ROOT_USER:-scholarforge} $${MINIO_ROOT_PASSWORD:-scholarforge-minio};
+      mc mb --ignore-existing local/scholarforge;
+      mc anonymous set download local/scholarforge;
+      exit 0;
+      "
+
+volumes:
+  mongo_data:
+  minio_data:
