@@ -552,14 +552,14 @@ export function publicObjectUrl(key: string): string {
 //       docs/{projectId}/{nanoid}.pdf
 ```
 
-**Design system (Phase 1 visual language):**
-- Font: Inter (or `next/font` Geist)
-- Dark-first UI. Background `#0B0F19`, surface `#121826`, border `#1F2937`, accent indigo `#6366F1`, text `#E5E7EB`, muted `#9CA3AF`
-- Academic but not boring. Think Linear/Vercel, not Moodle.
+**Design system (Phase 1 visual language — “Foundry”):**
+- Fonts: Inter (body, via `next/font`), Fraunces (display headings via `next/font`), system mono for eyebrow labels / tech tags
+- Dark-first UI. Ink + brass. Background `#0A0D14`, surface `#10151F`, hairline border `#1C2433`, accent brass `#C9A45C`, text `#E8E6DF`, muted `#8E8F86`, live `#38B07D`, archived/clay `#C76B4D`, danger `#C75F5F`
+- Academic but not boring. Editorial “foundry” feel: serif display type, uppercase tracked mono eyebrows, hairline borders, faint blueprint grid + brass glow on hero
 - Max content width `max-w-6xl`
-- Cards with 1px border, hover lift (`hover:-translate-y-0.5 hover:border-indigo-500/40`)
-- Status pills: draft=zinc, published=indigo, deployed=emerald, archived=amber
-- Tech badges: small outline pills
+- Cards: `rounded-lg`, 1px hairline border, subtle inner top highlight; hover lift with brass border
+- Status pills: draft=neutral muted, published=brass, deployed=live (green), archived=clay (amber-red)
+- Tech badges: small outline pills in mono
 
 **Navbar:**
 - Logo "ScholarForge" + spark/forge mark

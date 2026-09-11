@@ -12,17 +12,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1] disabled:pointer-events-none disabled:opacity-50",
+          "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900 disabled:pointer-events-none disabled:opacity-50",
           {
-            "bg-[#6366F1] text-white hover:bg-[#4F46E5] active:scale-[0.98]": variant === "primary",
-            "border border-[#1F2937] bg-[#121826] text-[#E5E7EB] hover:border-[#6366F1]/40 hover:bg-[#1a2035]": variant === "secondary",
-            "text-[#9CA3AF] hover:text-[#E5E7EB] hover:bg-[#121826]": variant === "ghost",
-            "bg-red-600/20 text-red-400 hover:bg-red-600/30 border border-red-900/40": variant === "danger",
+            "bg-brass text-ink-950 hover:bg-brass-hover active:scale-[0.98]": variant === "primary",
+            "border border-line bg-surface text-paper hover:border-brass/50 hover:bg-ink-700": variant === "secondary",
+            "text-muted hover:text-paper": variant === "ghost",
+            "border border-clay/30 bg-clay/15 text-clay hover:bg-clay/25": variant === "danger",
           },
           {
             "h-7 px-3 text-xs": size === "sm",
             "h-9 px-4 text-sm": size === "md",
-            "h-11 px-6 text-base": size === "lg",
+            "h-11 px-6 text-[0.9375rem]": size === "lg",
           },
           className
         )}

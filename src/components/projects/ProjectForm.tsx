@@ -157,7 +157,7 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
         {/* Core Info */}
         <section className="space-y-4">
-          <h2 className="text-lg font-semibold text-white border-b border-[#1F2937] pb-2">Core Info</h2>
+          <h2 className="text-lg font-semibold text-paper border-b border-line pb-2">Core Info</h2>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-4 md:col-span-2">
               <Input label="Project Title *" placeholder="Traffic Prediction Model" {...register("title")} error={errors.title?.message} />
@@ -176,7 +176,7 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
 
         {/* Technical */}
         <section className="space-y-4">
-          <h2 className="text-lg font-semibold text-white border-b border-[#1F2937] pb-2">Technical</h2>
+          <h2 className="text-lg font-semibold text-paper border-b border-line pb-2">Technical</h2>
           <div className="grid gap-4 md:grid-cols-2">
             <Select label="Category *" {...register("category")} error={errors.category?.message}>
               {PROJECT_CATEGORIES.map((c) => (
@@ -186,12 +186,12 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
 
             {/* Custom Tag Input for Tech Stack */}
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-[#E5E7EB]">Tech Stack *</label>
-              <div className="flex flex-wrap gap-2 rounded-lg border border-[#1F2937] bg-[#121826] p-2 focus-within:border-[#6366F1]">
+              <label className="text-sm font-medium text-paper">Tech Stack *</label>
+              <div className="flex flex-wrap gap-2 rounded-lg border border-line bg-surface p-2 focus-within:border-brass/60">
                 {techStack.map((tech) => (
-                  <span key={tech} className="inline-flex items-center gap-1 rounded bg-[#1F2937] px-2 py-1 text-xs text-[#E5E7EB]">
+                  <span key={tech} className="inline-flex items-center gap-1 rounded bg-ink-700 px-2 py-1 text-xs text-paper">
                     {tech}
-                    <button type="button" onClick={() => removeTech(tech)} className="text-[#9CA3AF] hover:text-red-400">&times;</button>
+                    <button type="button" onClick={() => removeTech(tech)} className="text-muted hover:text-clay">&times;</button>
                   </span>
                 ))}
                 <input
@@ -200,7 +200,7 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
                   onChange={(e) => setTechInput(e.target.value)}
                   onKeyDown={handleAddTech}
                   onBlur={() => commitTechInput()}
-                  className="flex-1 bg-transparent text-sm text-[#E5E7EB] placeholder:text-[#9CA3AF] focus:outline-none min-w-[120px]"
+                  className="flex-1 bg-transparent text-sm text-paper placeholder:text-muted focus:outline-none min-w-[120px]"
                   placeholder="e.g. react, nextjs, python (press Enter)"
                 />
               </div>
@@ -210,13 +210,13 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
             <Input label="Repository URL" placeholder="https://github.com/..." {...register("repositoryUrl")} error={errors.repositoryUrl?.message} />
             <Input label="Demo URL" placeholder="https://youtube.com/..." {...register("demoUrl")} error={errors.demoUrl?.message} />
             <Input label="Live Deployment URL" placeholder="https://my-app.vercel.app" {...register("deploymentUrl")} error={errors.deploymentUrl?.message} />
-            <Input label="Cover Image URL (Phase 1)" placeholder="https://picsum.photos/800/400" {...register("coverImageUrl")} error={errors.coverImageUrl?.message} />
+            <Input label="Cover Image URL" placeholder="https://picsum.photos/800/400" {...register("coverImageUrl")} error={errors.coverImageUrl?.message} />
           </div>
         </section>
 
         {/* Academic Details */}
         <section className="space-y-4">
-          <h2 className="text-lg font-semibold text-white border-b border-[#1F2937] pb-2">Academic Details</h2>
+          <h2 className="text-lg font-semibold text-paper border-b border-line pb-2">Academic Details</h2>
           <div className="grid gap-4 md:grid-cols-2">
             <Input label="Original Semester *" placeholder="Fall 2026" {...register("originalSemester")} error={errors.originalSemester?.message} />
             <Input label="Original Year *" type="number" {...register("originalYear")} error={errors.originalYear?.message} />
@@ -232,7 +232,7 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
 
         {/* Collaboration */}
         <section className="space-y-4">
-          <h2 className="text-lg font-semibold text-white border-b border-[#1F2937] pb-2">Collaboration</h2>
+          <h2 className="text-lg font-semibold text-paper border-b border-line pb-2">Collaboration</h2>
           <div className="flex items-center gap-2">
             <Controller
               name="lookingForContributors"
@@ -243,22 +243,22 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
                   id="looking"
                   checked={field.value}
                   onChange={field.onChange}
-                  className="h-4 w-4 rounded border-[#1F2937] bg-[#121826] text-[#6366F1] focus:ring-[#6366F1]"
+                  className="h-4 w-4 rounded border-line bg-surface text-brass focus:ring-brass"
                 />
               )}
             />
-            <label htmlFor="looking" className="text-sm font-medium text-[#E5E7EB]">
+            <label htmlFor="looking" className="text-sm font-medium text-paper">
               Looking for contributors
             </label>
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-[#E5E7EB]">Required Skills</label>
-            <div className="flex flex-wrap gap-2 rounded-lg border border-[#1F2937] bg-[#121826] p-2 focus-within:border-[#6366F1]">
+            <label className="text-sm font-medium text-paper">Required Skills</label>
+            <div className="flex flex-wrap gap-2 rounded-lg border border-line bg-surface p-2 focus-within:border-brass/60">
               {(requiredSkills ?? []).map((skill) => (
-                <span key={skill} className="inline-flex items-center gap-1 rounded bg-[#1F2937] px-2 py-1 text-xs text-[#E5E7EB]">
+                <span key={skill} className="inline-flex items-center gap-1 rounded bg-ink-700 px-2 py-1 text-xs text-paper">
                   {skill}
-                  <button type="button" onClick={() => removeSkill(skill)} className="text-[#9CA3AF] hover:text-red-400">&times;</button>
+                  <button type="button" onClick={() => removeSkill(skill)} className="text-muted hover:text-clay">&times;</button>
                 </span>
               ))}
               <input
@@ -266,14 +266,14 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
                 value={skillInput}
                 onChange={(e) => setSkillInput(e.target.value)}
                 onKeyDown={handleAddSkill}
-                className="flex-1 bg-transparent text-sm text-[#E5E7EB] placeholder:text-[#9CA3AF] focus:outline-none min-w-[120px]"
+                className="flex-1 bg-transparent text-sm text-paper placeholder:text-muted focus:outline-none min-w-[120px]"
                 placeholder="e.g. python, tensorflow (press Enter)"
               />
             </div>
           </div>
         </section>
 
-        <div className="flex gap-4 pt-4 border-t border-[#1F2937]">
+        <div className="flex gap-4 pt-4 border-t border-line">
           <Button type="submit" disabled={isPending} className="flex-1 md:flex-none" onClick={() => (draftRef.current = false)}>
             {isPending ? "Saving..." : isEditing ? "Save Changes" : "Publish Project"}
           </Button>

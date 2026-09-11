@@ -1,28 +1,72 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0B0F19; /* dark blue/black */
-  --color-surface: #121826;    /* slightly lighter cards */
-  --color-border: #1F2937;
-  --color-foreground: #E5E7EB;
-  --color-muted: #9CA3AF;
+  /* Foundry palette — deep ink blues with a warm brass accent */
+  --color-ink-950: #080b11;
+  --color-ink-900: #0a0d14; /* page background */
+  --color-ink-800: #10151f; /* surface */
+  --color-ink-700: #161c2a; /* raised / hover */
+  --color-ink-600: #1c2433; /* strong line */
 
-  --color-primary: #6366F1;    /* indigo */
-  --color-primary-hover: #4F46E5;
+  --color-line: #1c2433;
+  --color-line-strong: #263046;
 
-  --color-status-draft: #52525B;    /* zinc */
-  --color-status-published: #6366F1; /* indigo */
-  --color-status-deployed: #10B981;  /* emerald */
-  --color-status-archived: #F59E0B;  /* amber */
+  --color-paper: #e8e6df; /* warm off-white text */
+  --color-muted: #8e8f86;
+
+  --color-brass: #c9a45c; /* primary accent */
+  --color-brass-hover: #b9904a;
+  --color-brass-dim: #9e7f41;
+
+  --color-live: #38b07d;
+  --color-clay: #c76b4d;
+  --color-danger: #c75f5f;
+
+  /* Semantic aliases (kept for compatibility with existing classes) */
+  --color-background: #0a0d14;
+  --color-surface: #10151f;
+  --color-foreground: #e8e6df;
+  --color-border: #1c2433;
+  --color-primary: #c9a45c;
+  --color-primary-hover: #b9904a;
+
+  --color-status-draft: #8e8f86;
+  --color-status-published: #c9a45c;
+  --color-status-deployed: #38b07d;
+  --color-status-archived: #c76b4d;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 @layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    @apply antialiased min-h-screen selection:bg-primary/30;
+    @apply antialiased min-h-screen;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-brass) 28%, transparent);
   }
 }
 
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-brass);
+}
+
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(201, 164, 92, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(201, 164, 92, 0.055) 1px, transparent 1px);
+  background-size: 64px 64px;
+}

@@ -42,7 +42,7 @@ export default async function ProjectEditPage({ params }: { params: Promise<{ sl
     <div className="mx-auto max-w-4xl px-4 py-12">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white tracking-tight">Edit Project</h1>
-        <p className="mt-2 text-[#9CA3AF]">
+        <p className="mt-2 text-muted">
           Update details for <strong>{project.title}</strong>.
         </p>
       </div>

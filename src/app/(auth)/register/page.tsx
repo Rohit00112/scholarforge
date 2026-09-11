@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Card } from "@/components/ui/Card";
+import { Logo } from "@/components/ui/Logo";
 import { BRANCHES } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -54,15 +55,21 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="mx-auto max-w-md px-4 py-20">
-      <Card className="p-6">
-        <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-white">Create an Account</h1>
-          <p className="text-sm text-[#9CA3AF]">Use your college email address.</p>
+    <div className="mx-auto max-w-md px-4 py-16">
+      <Card className="p-8">
+        <div className="mb-8 flex flex-col items-center text-center">
+          <Link href="/" className="flex items-center gap-2.5">
+            <Logo />
+            <span className="font-display text-lg tracking-tight text-paper">
+              Scholar<span className="text-brass">Forge</span>
+            </span>
+          </Link>
+          <h1 className="mt-6 font-display text-2xl font-medium text-paper">Create an account</h1>
+          <p className="mt-1 text-sm text-muted">Use your college email address.</p>
         </div>
 
         {globalError && (
-          <div className="mb-4 rounded-md border border-red-900/40 bg-red-600/20 p-3 text-sm text-red-400">
+          <div className="mb-4 rounded-md border border-danger/30 bg-danger/10 p-3 text-sm text-danger">
             {globalError}
           </div>
         )}
@@ -98,9 +105,9 @@ export default function RegisterPage() {
           </Button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-[#9CA3AF]">
+        <p className="mt-6 text-center text-sm text-muted">
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-[#E5E7EB] hover:text-[#6366F1]">
+          <Link href="/login" className="font-medium text-paper hover:text-brass">
             Log in
           </Link>
         </p>

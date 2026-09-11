@@ -7,6 +7,7 @@ import { loginAction } from "@/actions/auth";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
+import { Logo } from "@/components/ui/Logo";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
 import Link from "next/link";
@@ -46,20 +47,26 @@ function LoginForm() {
   };
 
   return (
-    <Card className="p-6">
-      <div className="mb-6 text-center">
-        <h1 className="text-2xl font-bold text-white">Welcome back</h1>
-        <p className="text-sm text-[#9CA3AF]">Sign in to your account.</p>
+    <Card className="p-8">
+      <div className="mb-8 flex flex-col items-center text-center">
+        <Link href="/" className="flex items-center gap-2.5">
+          <Logo />
+          <span className="font-display text-lg tracking-tight text-paper">
+            Scholar<span className="text-brass">Forge</span>
+          </span>
+        </Link>
+        <h1 className="mt-6 font-display text-2xl font-medium text-paper">Welcome back</h1>
+        <p className="mt-1 text-sm text-muted">Sign in to your account.</p>
       </div>
 
       {justRegistered && !globalError && (
-        <div className="mb-4 rounded-md border border-emerald-900/40 bg-emerald-600/20 p-3 text-sm text-emerald-400">
+        <div className="mb-4 rounded-md border border-live/30 bg-live/10 p-3 text-sm text-live">
           Account created! Please log in.
         </div>
       )}
 
       {globalError && (
-        <div className="mb-4 rounded-md border border-red-900/40 bg-red-600/20 p-3 text-sm text-red-400">
+        <div className="mb-4 rounded-md border border-danger/30 bg-danger/10 p-3 text-sm text-danger">
           {globalError}
         </div>
       )}
@@ -73,9 +80,9 @@ function LoginForm() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-[#9CA3AF]">
+      <p className="mt-6 text-center text-sm text-muted">
         Don&apos;t have an account?{" "}
-        <Link href="/register" className="font-medium text-[#E5E7EB] hover:text-[#6366F1]">
+        <Link href="/register" className="font-medium text-paper hover:text-brass">
           Sign up
         </Link>
       </p>
@@ -85,8 +92,8 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="mx-auto max-w-sm px-4 py-20">
-      <Suspense fallback={<Card className="p-6 text-center text-[#9CA3AF]">Loading...</Card>}>
+    <div className="mx-auto max-w-sm px-4 py-16">
+      <Suspense fallback={<Card className="p-6 text-center text-muted">Loading...</Card>}>
         <LoginForm />
       </Suspense>
     </div>
