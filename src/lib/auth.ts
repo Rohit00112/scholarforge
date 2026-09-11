@@ -49,3 +49,15 @@ export async function requireRole(role: string) {
   if (user.role !== role && user.role !== "admin") throw new Error("Forbidden");
   return user;
 }
+
+export function canEditProject(
+  user: { id: string; role: string },
+  project: {
+    ownerId: { toString(): string };
+    teamMemberIds: Array<{ toString(): string }>;
+  }
+): boolean {
+  if (user.role === "admin") return true;
+  if (project.ownerId.toString() === user.id) return true;
+  return project.teamMemberIds.some((id) => id.toString() === user.id);
+}
