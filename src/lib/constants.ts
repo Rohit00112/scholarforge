@@ -16,6 +16,19 @@ export const PROJECT_CATEGORIES = [
   "data", "design", "research", "other",
 ] as const;
 
+export const CATEGORY_LABELS: Record<string, string> = {
+  web: "Web",
+  mobile: "Mobile",
+  "ml-ai": "ML & AI",
+  iot: "IoT",
+  systems: "Systems",
+  security: "Security",
+  data: "Data",
+  design: "Design",
+  research: "Research",
+  other: "Other",
+};
+
 export const LICENSE_TYPES = [
   "MIT", "Apache-2.0", "GPL-3.0", "BSD-3-Clause", "CC-BY-4.0", "Proprietary", "Unlicensed",
 ] as const;

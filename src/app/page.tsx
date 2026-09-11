@@ -1,20 +1,12 @@
 import Link from "next/link";
 import { Compass, Flame, GitFork, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { PROJECT_CATEGORIES } from "@/lib/constants";
+import { CATEGORY_LABELS, PROJECT_CATEGORIES } from "@/lib/constants";
+import { connectDB } from "@/lib/db";
+import Project from "@/models/Project";
+import { ProjectCard } from "@/components/projects/ProjectCard";
 
-const categoryLabels: Record<string, string> = {
-  web: "Web",
-  mobile: "Mobile",
-  "ml-ai": "ML & AI",
-  iot: "IoT",
-  systems: "Systems",
-  security: "Security",
-  data: "Data",
-  design: "Design",
-  research: "Research",
-  other: "Other",
-};
+export const dynamic = "force-dynamic";
 
 const steps = [
   {
@@ -37,7 +29,30 @@ const steps = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  await connectDB();
+  const publicFilter = { status: { $in: ["published", "deployed"] }, deletedAt: null };
+
+  let featured = await Project.find({ ...publicFilter, featured: true })
+    .sort({ publishedAt: -1 })
+    .limit(4)
+    .populate("ownerId", "username name avatarUrl branch")
+    .lean();
+
+  if (featured.length === 0) {
+    featured = await Project.find(publicFilter)
+      .sort({ starsCount: -1 })
+      .limit(4)
+      .populate("ownerId", "username name avatarUrl branch")
+      .lean();
+  }
+
+  const latest = await Project.find(publicFilter)
+    .sort({ publishedAt: -1 })
+    .limit(8)
+    .populate("ownerId", "username name avatarUrl branch")
+    .lean();
+
   return (
     <>
       {/* Hero */}
@@ -92,6 +107,46 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Featured builds */}
+      {featured.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 pb-16">
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="eyebrow">Featured builds</p>
+              <h2 className="mt-3 font-display text-2xl font-medium tracking-tight text-paper">Spotlight</h2>
+            </div>
+            <Link href="/projects" className="text-sm font-medium text-muted transition-colors hover:text-paper">
+              View all
+            </Link>
+          </div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {featured.map((project) => (
+              <ProjectCard key={project._id.toString()} project={project} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Latest projects */}
+      {latest.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 pb-16">
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="eyebrow">Recently published</p>
+              <h2 className="mt-3 font-display text-2xl font-medium tracking-tight text-paper">Latest</h2>
+            </div>
+            <Link href="/projects" className="text-sm font-medium text-muted transition-colors hover:text-paper">
+              View all
+            </Link>
+          </div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {latest.map((project) => (
+              <ProjectCard key={project._id.toString()} project={project} />
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Browse by category */}
       <section className="border-t border-line bg-ink-950 py-16">
         <div className="mx-auto max-w-6xl px-4">
@@ -105,7 +160,7 @@ export default function Home() {
                 href={`/projects?category=${category}`}
                 className="rounded-md border border-line bg-ink-800 px-3 py-1.5 font-mono text-xs transition-colors hover:border-brass/50 hover:text-brass"
               >
-                {categoryLabels[category] ?? category}
+                {CATEGORY_LABELS[category] ?? category}
               </Link>
             ))}
           </div>
