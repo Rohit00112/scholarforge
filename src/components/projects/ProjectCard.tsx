@@ -8,8 +8,8 @@ type CardOwner = {
   username?: string;
 } | null;
 
-interface CardProject {
-  _id: unknown;
+export interface CardProject {
+  _id: { toString(): string };
   slug: string;
   title: string;
   tagline?: string;

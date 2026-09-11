@@ -6,7 +6,7 @@ import User from "@/models/User";
 import { loginSchema } from "./validators/auth";
 import { authConfig } from "./auth.config";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   ...authConfig,
   providers: [
     CredentialsProvider({
